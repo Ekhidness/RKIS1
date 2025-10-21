@@ -1,0 +1,17 @@
+<!-- polls/templates/polls/profile_edit.html -->
+{% extends 'polls/base.html' %}
+
+{% block title %}Редактировать профиль{% endblock %}
+
+{% block content %}
+    <h2>Редактировать профиль</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h3>Данные пользователя:</h3>
+        {{ user_form.as_p }}
+        <h3>Данные профиля:</h3>
+        {{ profile_form.as_p }}
+        <button type="submit">Сохранить изменения</button>
+    </form>
+    <p><a href="{% url 'polls:profile' %}">Назад к профилю</a></p>
+{% endblock %}

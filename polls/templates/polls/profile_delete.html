@@ -1,0 +1,14 @@
+<!-- polls/templates/polls/profile_delete.html -->
+{% extends 'polls/base.html' %}
+
+{% block title %}Удалить профиль{% endblock %}
+
+{% block content %}
+    <h2>Удалить профиль</h2>
+    <p>Вы уверены, что хотите удалить свой профиль? Это действие нельзя отменить.</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" style="background-color: red; color: white;">Да, удалить мой профиль</button>
+    </form>
+    <p><a href="{% url 'polls:profile' %}">Назад к профилю</a></p>
+{% endblock %}

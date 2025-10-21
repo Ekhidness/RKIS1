@@ -1,0 +1,14 @@
+<!-- polls/templates/polls/question_create.html -->
+{% extends 'polls/base.html' %}
+
+{% block title %}Создать вопрос{% endblock %}
+
+{% block content %}
+    <h2>Создать новый вопрос</h2>
+    <form method="post" enctype="multipart/form-data"> <!-- enctype важно для файлов -->
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Создать вопрос</button>
+    </form>
+    <p><a href="{% url 'polls:index' %}">Назад к опросам</a></p>
+{% endblock %}

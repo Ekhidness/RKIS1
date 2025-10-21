@@ -1,14 +1,34 @@
-<form action="{% url 'polls:vote' question.id %}" method="post">
-    {% csrf_token %}
-    <fieldset>
-        <legend>
-            <h1>{{question.question_text}}</h1>
-        </legend>
-        {% if error_message %}<p><strong> {{error_message}}</strong></p>{% endif %}
-        {% for choice in question.choice_set.all %}
-        <input type="radio" name="choice" id="choice{{forloop.counter}}" value="{{choice.id}}">
-        <label for="choice{{forloop.counter}}">{{choice.choice_text}}</label><br>
-        {% endfor %}
-    </fieldset>
-<input type="submit" value="Vote">
-</form>
+<!-- polls/templates/polls/detail.html -->
+{% extends 'polls/base.html' %}
+
+{% block title %}{{ question.question_text }} - Опросы{% endblock %}
+
+{% block content %}
+    <h1>{{ question.question_text }}</h1>
+    <p>{{ question.pub_date }}</p>
+    {% if question.image %}
+        <img src="{{ question.image.url }}" alt="Image for {{ question.question_text }}" style="max-width: 300px;">
+    {% endif %}
+
+    {% if has_voted %}
+        <p>Вы уже голосовали в этом опросе.</p>
+        <a href="{% url 'polls:results' question.id %}">Посмотреть результаты</a>
+    {% else %}
+        {% if user.is_authenticated %}
+            <form action="{% url 'polls:vote' question.id %}" method="post">
+                {% csrf_token %}
+                {% for choice in question.choice_set.all %}
+                    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+                    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+                {% endfor %}
+                <input type="submit" value="Голосовать">
+            </form>
+        {% else %}
+            <p>Пожалуйста, <a href="{% url 'polls:register' %}">зарегистрируйтесь</a> или войдите, чтобы голосовать.</p>
+        {% endif %}
+    {% endif %}
+
+    {% if error_message %}
+        <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
+{% endblock %}

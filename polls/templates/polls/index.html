@@ -1,12 +1,18 @@
-{% if latest_question_list %}
-<ul>
-    {% for question in latest_question_list %}
-    <li><a href="{% url 'polls:detail' question.id %}">{{question.question_text}}</a> </li>
-    {% endfor %}
-</ul>
-    {% else %}
-     <p>
-         Нет вопросов!
-     </p>
+<!-- polls/templates/polls/index.html -->
+{% extends 'polls/base.html' %}
 
-{% endif %}
+{% block title %}Главная - Опросы{% endblock %}
+
+{% block content %}
+    <h1>Активные Опросы</h1>
+
+    {% if latest_question_list %}
+        <ul>
+        {% for question in latest_question_list %}
+            <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Нет активных опросов.</p>
+    {% endif %}
+{% endblock %}

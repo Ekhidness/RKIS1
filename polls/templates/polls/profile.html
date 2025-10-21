@@ -1,0 +1,20 @@
+<!-- polls/templates/polls/profile.html -->
+{% extends 'polls/base.html' %}
+
+{% block title %}Профиль - {{ user.username }}{% endblock %}
+
+{% block content %}
+    <h2>Профиль пользователя: {{ user.username }}</h2>
+    <p>Email: {{ user.email }}</p>
+    {% if user.profile %}
+        <p>Имя в профиле: {{ user.profile.name }}</p>
+        {% if user.profile.avatar %}
+            <p>Аватар: <img src="{{ user.profile.avatar.url }}" alt="Avatar for {{ user.username }}" style="max-width: 100px;"></p>
+        {% else %}
+            <p>Аватар не загружен.</p>
+        {% endif %}
+    {% else %}
+        <p>Профиль не найден. Это ошибка.</p>
+    {% endif %}
+    <!-- Ссылки на редактирование и удаление профиля уже в base.html -->
+{% endblock %}

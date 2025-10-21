@@ -1,7 +1,20 @@
-<h1>{{ question.question_text }}</h1>
-<ul>
-    {% for choice in question.choice_set.all %}
-    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{choice.votes|pluralize}}</li>
+<!-- polls/templates/polls/results.html -->
+{% extends 'polls/base.html' %}
+
+{% block title %}Результаты - {{ question.question_text }}{% endblock %}
+
+{% block content %}
+    <h1>{{ question.question_text }}</h1>
+    <p>{{ question.pub_date }}</p>
+    {% if question.image %}
+        <img src="{{ question.image.url }}" alt="Image for {{ question.question_text }}" style="max-width: 300px;">
+    {% endif %}
+
+    <ul>
+    {% for result in results %}
+        <li>{{ result.choice.choice_text }}: {{ result.choice.votes }} голосов ({{ result.percent }}%)</li>
     {% endfor %}
-</ul>
-<a href="{% url 'polls:detail'  question.id %}">выбрать еще раз? </a>
+    </ul>
+
+    <a href="{% url 'polls:detail' question.id %}">Снова проголосовать?</a>
+{% endblock %}
