@@ -16,5 +16,20 @@
     {% else %}
         <p>Профиль не найден. Это ошибка.</p>
     {% endif %}
+
+    <!-- Отображение истёкших вопросов для администратора -->
+    {% if user.is_staff and expired_questions %}
+        <h3>Истёкшие вопросы (видны только администратору)</h3>
+        <ul>
+        {% for question in expired_questions %}
+            <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a> (Истёк: {{ question.pub_date|add:question.lifespan_days|date:"Y-m-d H:i:s" }})</li>
+        {% endfor %}
+        </ul>
+    {% elif user.is_staff and expired_questions|length == 0 %}
+        <h3>Истёкшие вопросы (видны только администратору)</h3>
+        <p>Нет истёкших вопросов.</p>
+    {% endif %}
+    <!-- /Отображение истёкших вопросов для администратора -->
+
     <!-- Ссылки на редактирование и удаление профиля уже в base.html -->
 {% endblock %}

@@ -119,8 +119,24 @@ def register(request):
 def profile(request):
     """
     Просмотр профиля пользователя.
+    Если пользователь - админ, показывает истёкшие вопросы.
     """
-    return render(request, 'polls/profile.html', {'user': request.user})
+    user = request.user
+    context = {'user': user}
+
+    # Проверяем, является ли пользователь администратором
+    if user.is_staff:
+        now = timezone.now()
+        # Используем raw SQL через extra для вычисления даты истечения в БД
+        # для фильтрации истёкших вопросов
+        now_str = now.strftime('%Y-%m-%d %H:%M:%S.%f')
+        expired_questions = Question.objects.extra(
+            where=["datetime(pub_date, '+' || lifespan_days || ' days') <= %s"],
+            params=[now_str]
+        ).order_by('-pub_date')
+        context['expired_questions'] = expired_questions
+
+    return render(request, 'polls/profile.html', context)
 
 @login_required
 def profile_edit(request):
