@@ -13,8 +13,9 @@ class UserProfile(models.Model):
         return f"{self.user.username}'s profile"
 
 class Question(models.Model):
-    question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published', auto_now_add=True) # Исправлено: добавлен auto_now_add=True
+    question_text = models.CharField(max_length=200) # Можно использовать как полное описание или заголовок
+    short_description = models.CharField(max_length=500, help_text="Краткое описание для списка опросов") # Новое поле
+    pub_date = models.DateTimeField('date published', auto_now_add=True)
     image = models.ImageField(upload_to='question_images/', blank=True, null=True)
     lifespan_days = models.PositiveIntegerField(default=7, help_text="Сколько дней вопрос будет публичным")
 

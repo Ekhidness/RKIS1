@@ -5,6 +5,8 @@
 
 {% block content %}
     <h1>{{ question.question_text }}</h1>
+    <!-- Отображаем краткое описание как часть полного описания -->
+    <p>{{ question.short_description }}</p>
     <p>{{ question.pub_date }}</p>
     {% if question.image %}
         <img src="{{ question.image.url }}" alt="Image for {{ question.question_text }}" style="max-width: 300px;">
