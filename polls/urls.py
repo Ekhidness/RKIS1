@@ -15,7 +15,8 @@ urlpatterns = [
     path('profile/edit/', views.profile_edit, name='profile_edit'),
     path('profile/delete/', views.profile_delete, name='profile_delete'),
     # URL для выхода, используя встроенное представление LogoutView
-    path('logout/', auth_views.LogoutView.as_view(template_name='registration/logged_out.html', next_page='polls:index'), name='logout'),
+    # next_page указывает, куда перенаправить после выхода
+    path('logout/', auth_views.LogoutView.as_view(next_page='polls:index'), name='logout'),
     path('create/', views.question_create, name='create_question'),
     # path('create/', views.QuestionCreateView.as_view(), name='create_question'), # Старая строка, можно удалить
 ]
