@@ -93,7 +93,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 #   https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'ru-RU'
+LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
@@ -117,3 +117,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# --- НОВАЯ НАСТРОЙКА ---
+LOGIN_REDIRECT_URL = 'polls:index' # Перенаправление после входа
+# --- /НОВАЯ НАСТРОЙКА ---
